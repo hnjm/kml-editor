@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KmlEditorConsole", "KmlEditorConsole\KmlEditorConsole.csproj", "{8736058B-4E6D-4A0C-990C-5D5A88454CC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KmlEditorLibrary", "KmlEditorLibrary\KmlEditorLibrary.csproj", "{61969313-5A67-44D5-A797-4D5733764CAE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8736058B-4E6D-4A0C-990C-5D5A88454CC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8736058B-4E6D-4A0C-990C-5D5A88454CC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8736058B-4E6D-4A0C-990C-5D5A88454CC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8736058B-4E6D-4A0C-990C-5D5A88454CC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61969313-5A67-44D5-A797-4D5733764CAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61969313-5A67-44D5-A797-4D5733764CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61969313-5A67-44D5-A797-4D5733764CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61969313-5A67-44D5-A797-4D5733764CAE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
