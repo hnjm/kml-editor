@@ -74,16 +74,9 @@ namespace KmlEditorLibrary
             });
         }
 
-        static string RemoveInvalidFilePathCharacters(string filename, string replaceChar = "")
-        {
-            string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
-            Regex r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
-            return r.Replace(filename, replaceChar);
-        }
-
         static void ProcessFolder(Folder folder, string outputPath, int folderLevel, int currentFolderLevel, Document doc)
         {
-            string kmlFilePath = Path.Combine(outputPath, RemoveInvalidFilePathCharacters(folder.Name) + ".kml");
+            string kmlFilePath = Path.Combine(outputPath, FileHelper.RemoveInvalidFilePathCharacters(folder.Name) + ".kml");
             Document newDoc = new Document();
             newDoc.Name = folder.Name;
             if (folder.Description != null) newDoc.Description = folder.Description.Clone();
@@ -96,7 +89,7 @@ namespace KmlEditorLibrary
             {
                 if (feature is Folder && folderLevel > currentFolderLevel)
                 {
-                    string newOutputPath = Path.Combine(outputPath, RemoveInvalidFilePathCharacters(feature.Name));
+                    string newOutputPath = Path.Combine(outputPath, FileHelper.RemoveInvalidFilePathCharacters(feature.Name));
                     Directory.CreateDirectory(newOutputPath);
                     ProcessFolder(feature as Folder, newOutputPath, folderLevel, currentFolderLevel + 1, doc);
                 }
