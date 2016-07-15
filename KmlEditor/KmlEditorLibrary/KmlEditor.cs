@@ -32,5 +32,15 @@ namespace KmlEditorLibrary
                 }
             }
         }
+
+        public void closeFile()
+        {
+            kmlFile = null;
+        }
+
+        public void splitKmlIntoFolders(String outputPath, int folderLevel)
+        {
+            KmlSplitter.SplitKmlIntoFolders(kmlFile, outputPath, folderLevel);
+        }
     }
 }
