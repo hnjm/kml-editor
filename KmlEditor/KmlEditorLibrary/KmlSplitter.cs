@@ -103,57 +103,6 @@ namespace KmlEditorLibrary
                 KmlFile kmlOut = KmlFile.Create(newDoc, false);
                 kmlOut.Save(stream);
             }
-            /*
-
-            if (folderLevel > currentFolderLevel) {
-                string newOutputPath = Path.Combine(outputPath, folder.Name);
-                Directory.CreateDirectory(newOutputPath);
-                string folderInformationFile = Path.Combine(newOutputPath, "folderDescription.txt");
-                using (StreamWriter outputFile = new StreamWriter(folderInformationFile))
-                {
-                    if(folder.Description != null)
-                    {
-                        String description = folder.Description.Text;
-                        outputFile.WriteLine(folder.Description.Text);
-                    }
-                }
-                Document doc = new Document();
-                doc.Name = folder.Name;
-                //d.Schemas.ToList().ForEach(s => doc.AddSchema(s.Clone()));
-                doc.AddFeature(folder.Clone());
-
-                KmlFile kmlOut = KmlFile.Create(doc, false);
-                string folderFileName = Path.Combine(outputPath, "folder.kml");
-
-                IEnumerable<Feature> features = folder.Features;
-                features.ToList().ForEach(feature =>
-                {
-                    if (feature is Folder)
-                    {
-                        ProcessFolder(feature as Folder, newOutputPath, folderLevel, currentFolderLevel + 1);
-                    } else
-                    {
-                        doc.AddFeature(feature.Clone());
-                    }
-                });
-                using (var stream = System.IO.File.OpenWrite(folderFileName))
-                {
-                    kmlOut.Save(stream);
-                }
-            }
-            else
-            {
-                string folderFileName = Path.Combine(outputPath, "folder.kml");
-                Document doc = new Document();
-                doc.Name = folder.Name;
-                //d.Schemas.ToList().ForEach(s => doc.AddSchema(s.Clone()));
-                doc.AddFeature(folder.Clone());
-                KmlFile kmlOut = KmlFile.Create(doc, false);
-                using (var stream = System.IO.File.OpenWrite(folderFileName))
-                {
-                    kmlOut.Save(stream);
-                }
-            }*/
         }
     }
 }
