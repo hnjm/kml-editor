@@ -66,7 +66,7 @@ namespace KmlEditorLibrary
             Folder folder = new Folder();
             folder.Name = doc.Name;
             parentContainer.AddFeature(folder);
-            doc.Features.ToList().ForEach(feature => folder.AddFeature(feature));
+            doc.Features.ToList().ForEach(feature => folder.AddFeature(feature.Clone()));
             directory.EnumerateDirectories().ToList().ForEach(f => { processFolder(folder, f); });
         }
     }
