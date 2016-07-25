@@ -48,7 +48,7 @@ namespace KmlEditorLibrary
 
             KmlFile rootKmlFile = loadKmlFile(kmlf.FullName);
             if (!(rootKmlFile.Root is Document)) throw new Exception();
-            Document rootDoc = (Document) rootKmlFile.Root;
+            Document rootDoc = (Document) (rootKmlFile.Root.Clone());
 
             dir.EnumerateDirectories().ToList().ForEach(f => { processFolder(rootDoc, f); });
             KmlFile kmlOut = KmlFile.Create(rootDoc, false);
@@ -63,9 +63,15 @@ namespace KmlEditorLibrary
             KmlFile rootKmlFile = loadKmlFile(kmlf.FullName);
             if (!(rootKmlFile.Root is Document)) throw new Exception();
             Document doc = (Document)rootKmlFile.Root;
-            Folder folder = new Folder();
+            Folder folder = (Folder)parentContainer.Features.FirstOrDefault(c => c is Folder && doc.Name.Equals(c.Name, StringComparison.OrdinalIgnoreCase));
+            if (folder == null)
+            {
+                folder = new Folder();
+                parentContainer.AddFeature(folder);
+            }
             folder.Name = doc.Name;
-            parentContainer.AddFeature(folder);
+            if (doc.Description != null) folder.Description = doc.Description;
+            List<DirectoryInfo> directories = directory.EnumerateDirectories().ToList();
             doc.Features.ToList().ForEach(feature => folder.AddFeature(feature.Clone()));
             directory.EnumerateDirectories().ToList().ForEach(f => { processFolder(folder, f); });
         }

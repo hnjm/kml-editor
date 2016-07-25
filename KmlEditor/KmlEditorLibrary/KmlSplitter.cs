@@ -92,6 +92,10 @@ namespace KmlEditorLibrary
                     string newOutputPath = Path.Combine(outputPath, FileHelper.RemoveInvalidFilePathCharacters(feature.Name));
                     Directory.CreateDirectory(newOutputPath);
                     ProcessFolder(feature as Folder, newOutputPath, folderLevel, currentFolderLevel + 1, doc);
+                    Folder newFolder = new Folder();
+                    if(feature.Name != null) newFolder.Name = feature.Name;
+                    if(feature.Description != null) newFolder.Description = feature.Description.Clone();
+                    newDoc.AddFeature(newFolder);
                 }
                 else
                 {
