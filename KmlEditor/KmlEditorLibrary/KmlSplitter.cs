@@ -12,27 +12,17 @@ namespace KmlEditorLibrary
 {
     public class KmlSplitter
     {
+        public static void SplitKmlIntoFolders(string kmlFilePath, String outputPath, int folderLevel)
+        {
+            KmlFile kmlFile = FileHelper.LoadKmlKmzFile(kmlFilePath);
+            SplitKmlIntoFolders(kmlFile, outputPath, folderLevel);
+        }
+
         public static void SplitKmlIntoFolders(KmlFile kmlFile, String outputPath, int folderLevel)
         {
             if (kmlFile == null) return;
 
-            // check if the folder exists
-            DirectoryInfo dir = new DirectoryInfo(outputPath);
-            if (!dir.Exists)
-            {
-                dir.Create();
-            } else
-            { 
-                foreach (FileInfo fi in dir.GetFiles())
-                {
-                    fi.Delete();
-                }
-
-                foreach (DirectoryInfo di in dir.GetDirectories())
-                {
-                    di.Delete(true);
-                }
-            }
+            FileHelper.CreateDirectoryAndCleanIt(outputPath);
 
             Kml kml = kmlFile.Root as Kml;
             if (kml != null)
@@ -52,25 +42,25 @@ namespace KmlEditorLibrary
             {
                 ProcessFolder(feature as Folder, outputPath, folderLevel, currentFolderLevel, doc);
             }
-            else if (feature is Container)
-            {
-                ProcessContainer(feature as Container, outputPath, folderLevel, currentFolderLevel);
-            }
-        }
-
-        static void ProcessContainer(Container container, string outputPath, int folderLevel, int currentFolderLevel)
-        {
-            if (container is Document)
-            {
-                ProcessDocument(container as Document, outputPath, folderLevel, currentFolderLevel);
-            }
         }
 
         static void ProcessDocument(Document document, string outputPath, int folderLevel, int currentFolderLevel)
         {
+            Document newDoc = new Document();
+            newDoc.Name = document.Name;
+            if (document.Description != null) newDoc.Description = document.Description.Clone();
+            if (document.Schemas != null) document.Schemas.ToList().ForEach(s => newDoc.AddSchema(s.Clone()));
+            //if (document.Styles != null) document.Styles.ToList().ForEach(s => newDoc.AddStyle(s.Clone()));
+            if (document.StyleUrl != null) newDoc.StyleUrl = document.StyleUrl;
+
+            string newOutputPath = Path.Combine(outputPath, FileHelper.RemoveInvalidFilePathCharacters(newDoc.Name));
+            Directory.CreateDirectory(newOutputPath);
+            string kmlFilePath = Path.Combine(outputPath, FileHelper.RemoveInvalidFilePathCharacters(document.Name) + ".kml");
+            FileHelper.SaveToKmlFile(newDoc, kmlFilePath);
+
             IEnumerable<Feature> features = document.Features;
             features.ToList().ForEach(feature => {
-                ProcessFeature(feature, outputPath, folderLevel, currentFolderLevel, document);
+                ProcessFeature(feature, newOutputPath, folderLevel, currentFolderLevel+1, document);
             });
         }
 
@@ -102,11 +92,7 @@ namespace KmlEditorLibrary
                     newDoc.AddFeature(feature.Clone());
                 }
             });
-            using (var stream = System.IO.File.OpenWrite(kmlFilePath))
-            {
-                KmlFile kmlOut = KmlFile.Create(newDoc, false);
-                kmlOut.Save(stream);
-            }
+            FileHelper.SaveToKmlFile(newDoc, kmlFilePath);
         }
     }
 }

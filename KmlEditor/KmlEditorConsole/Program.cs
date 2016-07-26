@@ -11,17 +11,16 @@ namespace KmlEditorConsole
     {
         static void Main(string[] args)
         {
-            /*
+            
             String inFile = @"C:\tmp\Test\Ferromapas (en Edición).kml";
             KmlEditor kmlEditor = new KmlEditor();
             kmlEditor.openFile(inFile);
             kmlEditor.splitKmlIntoFolders("C:\\tmp\\output", 3);
             kmlEditor.closeFile();
-            */
             
-            string inFile = "C:\\tmp\\output";
-            string outKml = "C:\\tmp\\Test\\out.kml";
-            KmlJoiner.JoinFoldersIntoKml(inFile, outKml);
+            string inFile2 = "C:\\tmp\\output";
+            string outKml2 = "C:\\tmp\\Test\\out.kml";
+            KmlJoiner.JoinFoldersIntoKml(inFile2, outKml2);
             
         }
     }
