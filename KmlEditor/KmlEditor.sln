@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KmlEditorConsole", "KmlEdit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KmlEditorLibrary", "KmlEditorLibrary\KmlEditorLibrary.csproj", "{61969313-5A67-44D5-A797-4D5733764CAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KmlEditorConsoleTest", "KmlEditorConsoleTest\KmlEditorConsoleTest.csproj", "{EB431057-7959-451B-90B1-A99CA6FADEE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{61969313-5A67-44D5-A797-4D5733764CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61969313-5A67-44D5-A797-4D5733764CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61969313-5A67-44D5-A797-4D5733764CAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB431057-7959-451B-90B1-A99CA6FADEE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB431057-7959-451B-90B1-A99CA6FADEE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB431057-7959-451B-90B1-A99CA6FADEE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB431057-7959-451B-90B1-A99CA6FADEE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

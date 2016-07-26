@@ -4,33 +4,39 @@ using System;
 
 namespace KmlEditorConsole
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             MainOption mainOption = new MainOption();
-            if (CommandLine.Parser.Default.ParseArguments(args, mainOption))
+            CommandLine.Parser parser = new CommandLine.Parser(s =>
+            {
+                s.IgnoreUnknownArguments = true;
+            });
+            if (parser.ParseArguments(args, mainOption))
             {
                 if (mainOption.split) {
                     KmlSplitOption kmlSplitOption = new KmlSplitOption();
-                    if (CommandLine.Parser.Default.ParseArguments(args, kmlSplitOption))
+                    if (parser.ParseArguments(args, kmlSplitOption))
                     {
-                        Console.WriteLine("Split file '" + kmlSplitOption.file + "' to folder '" + kmlSplitOption.outputFolder + "' folderLevel:" + kmlSplitOption.folderLevel);
+                        String output = "Split file '" + kmlSplitOption.file + "' to folder '" + kmlSplitOption.outputFolder + "' folderLevel:" + kmlSplitOption.folderLevel;
+                        Console.WriteLine(output);
                         KmlSplitter.SplitKmlIntoFolders(kmlSplitOption.file, kmlSplitOption.outputFolder, kmlSplitOption.folderLevel);
                     } else {
-                        kmlSplitOption.GetUsage();
+                        Console.WriteLine(kmlSplitOption.GetUsage());
                     }
                 } else if (mainOption.join)
                 {
                     KmlJoinOption kmlJoinOption = new KmlJoinOption();
-                    if (CommandLine.Parser.Default.ParseArguments(args, kmlJoinOption))
+                    if (parser.ParseArguments(args, kmlJoinOption))
                     {
-                        Console.WriteLine("Join folder '" + kmlJoinOption.inputFolder + "' to file '" + kmlJoinOption.outputFile + "'");
+                        String output = "Join folder '" + kmlJoinOption.inputFolder + "' to file '" + kmlJoinOption.outputFile + "'";
+                        Console.WriteLine(output);
                         KmlJoiner.JoinFoldersIntoKml(kmlJoinOption.inputFolder, kmlJoinOption.outputFile);
                     }
                     else
                     {
-                        kmlJoinOption.GetUsage();
+                        Console.WriteLine(kmlJoinOption.GetUsage());                        
                     }
                 }
                 else
