@@ -1,9 +1,6 @@
 ﻿using KmlEditorLibrary;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace KmlEditorConsole
 {
@@ -11,17 +8,40 @@ namespace KmlEditorConsole
     {
         static void Main(string[] args)
         {
-            
-            String inFile = @"C:\tmp\Test\Ferromapas (en Edición).kml";
-            KmlEditor kmlEditor = new KmlEditor();
-            kmlEditor.openFile(inFile);
-            kmlEditor.splitKmlIntoFolders("C:\\tmp\\output", 3);
-            kmlEditor.closeFile();
-            
-            string inFile2 = "C:\\tmp\\output";
-            string outKml2 = "C:\\tmp\\Test\\out.kml";
-            KmlJoiner.JoinFoldersIntoKml(inFile2, outKml2);
-            
+            MainOption mainOption = new MainOption();
+            if (CommandLine.Parser.Default.ParseArguments(args, mainOption))
+            {
+                if (mainOption.split) {
+                    KmlSplitOption kmlSplitOption = new KmlSplitOption();
+                    if (CommandLine.Parser.Default.ParseArguments(args, kmlSplitOption))
+                    {
+                        Console.WriteLine("Split file '" + kmlSplitOption.file + "' to folder '" + kmlSplitOption.outputFolder + "' folderLevel:" + kmlSplitOption.folderLevel);
+                        KmlSplitter.SplitKmlIntoFolders(kmlSplitOption.file, kmlSplitOption.outputFolder, kmlSplitOption.folderLevel);
+                    } else {
+                        kmlSplitOption.GetUsage();
+                    }
+                } else if (mainOption.join)
+                {
+                    KmlJoinOption kmlJoinOption = new KmlJoinOption();
+                    if (CommandLine.Parser.Default.ParseArguments(args, kmlJoinOption))
+                    {
+                        Console.WriteLine("Join folder '" + kmlJoinOption.inputFolder + "' to file '" + kmlJoinOption.outputFile + "'");
+                        KmlJoiner.JoinFoldersIntoKml(kmlJoinOption.inputFolder, kmlJoinOption.outputFile);
+                    }
+                    else
+                    {
+                        kmlJoinOption.GetUsage();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(mainOption.GetUsage());
+                }
+            }
+            else
+            {
+                Console.WriteLine(mainOption.GetUsage());                
+            }
         }
     }
 }
