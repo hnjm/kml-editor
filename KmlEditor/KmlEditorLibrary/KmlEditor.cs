@@ -10,7 +10,10 @@ namespace KmlEditorLibrary
 {
     public class KmlEditor
     {
-        KmlFile kmlFile = null;
+        KmlFile _kmlFile = null;
+        public KmlFile kmlFile {
+            get { return _kmlFile; }
+        }
 
         public void openFile(String filePath)
         {
@@ -23,24 +26,24 @@ namespace KmlEditorLibrary
                     string kmlFileString = kmzFile.ReadKml();
                     using (StringReader stringReader = new StringReader(kmlFileString))
                     {
-                        kmlFile = KmlFile.Load(stringReader);
+                        _kmlFile = KmlFile.Load(stringReader);
                     }
                 }
                 else
                 {
-                    kmlFile = KmlFile.Load(fileStream);
+                    _kmlFile = KmlFile.Load(fileStream);
                 }
             }
         }
 
         public void closeFile()
         {
-            kmlFile = null;
+            _kmlFile = null;
         }
 
         public void splitKmlIntoFolders(String outputPath, int folderLevel)
         {
-            KmlSplitter.SplitKmlIntoFolders(kmlFile, outputPath, folderLevel);
+            KmlSplitter.SplitKmlIntoFolders(_kmlFile, outputPath, folderLevel);
         }
     }
 }
