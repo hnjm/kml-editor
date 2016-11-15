@@ -15,6 +15,6 @@
                 <MenuItem x:Name="ExitMenu" Header="_Exit" Click="ExitMenu_Click" />
             </MenuItem>
         </Menu>
-        <local:KmlTreeView Margin="0,20,0,-0.2" Width="189" Height="Auto" HorizontalAlignment="Left" />
+        <local:KmlTreeView x:Name="kmlTreeView" Margin="0,20,0,-0.2" Width="189" Height="Auto" HorizontalAlignment="Left" />
     </Grid>
 </Window>

@@ -47,6 +47,7 @@ namespace KmlEditorWpf
             if (userClickedOK == true)
             {
                 kmlEditor.openFile(openFileDialog.FileName);
+                kmlTreeView.kmlFile = kmlEditor.kmlFile;
             }
         }
 
