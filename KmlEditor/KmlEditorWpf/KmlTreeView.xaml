@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="KmlEditorWpf.KmlTreeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KmlEditorWpf"
+             mc:Ignorable="d" Height="320.282" Width="345.634">
+    <Grid>
+        <TreeView x:Name="treeView" Margin="2,2,2,2"/>
+
+    </Grid>
+</UserControl>

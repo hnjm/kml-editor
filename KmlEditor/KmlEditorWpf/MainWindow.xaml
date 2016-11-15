@@ -1,19 +1,20 @@
-﻿<Window x:Class="KmlEditorWpf.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KmlEditorWpf"
+        xmlns:KmlEditorLibrary="clr-namespace:KmlEditorLibrary;assembly=KmlEditorLibrary" x:Class="KmlEditorWpf.MainWindow" 
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Menu x:Name="MainMenu" VerticalAlignment="Top">
+        <Menu x:Name="MainMenu" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <MenuItem Header="_File">
                 <MenuItem x:Name="OpenMenu" Header="_Open..." Click="OpenMenu_Click" />
                 <Separator />
                 <MenuItem x:Name="ExitMenu" Header="_Exit" Click="ExitMenu_Click" />
             </MenuItem>
         </Menu>
-
+        <local:KmlTreeView Margin="0,20,0,-0.2" Width="189" Height="Auto" HorizontalAlignment="Left" />
     </Grid>
 </Window>
