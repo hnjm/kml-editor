@@ -71,6 +71,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\ImagesFromUri.cs" />
+    <Compile Include="Helpers\Models\ImageByUri.cs" />
     <Compile Include="KmlTreeView.xaml.cs">
       <DependentUpon>KmlTreeView.xaml</DependentUpon>
     </Compile>
@@ -80,6 +82,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\KMLFeatureTreeViewItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -113,6 +116,7 @@
       <Name>KmlEditorLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

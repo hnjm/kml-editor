@@ -34,6 +34,7 @@
       <HintPath>..\packages\DotNetZip.Reduced.1.9.1.8\lib\net20\Ionic.Zip.Reduced.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="SharpKml, Version=3.0.0.0, Culture=neutral, PublicKeyToken=9bb853c026a5c0ac, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpKml.Core.3.0.0\lib\portable45-net45+win8+wpa81\SharpKml.dll</HintPath>
       <Private>True</Private>
@@ -49,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileHelper.cs" />
-    <Compile Include="KmlEditor.cs" />
+    <Compile Include="KmlFileHelper.cs" />
     <Compile Include="KmlJoiner.cs" />
     <Compile Include="KmlSplitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

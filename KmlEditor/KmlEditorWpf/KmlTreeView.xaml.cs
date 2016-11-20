@@ -1,4 +1,7 @@
-﻿using SharpKml.Base;
+﻿using KmlEditorLibrary;
+using KmlEditorWpf.Helpers;
+using KmlEditorWpf.Models;
+using SharpKml.Base;
 using SharpKml.Dom;
 using SharpKml.Engine;
 using System;
@@ -22,13 +25,10 @@ namespace KmlEditorWpf
     /// Interaction logic for KmlTreeView.xaml
     /// </summary>
     /// 
-    public class KMLFeatureTreeViewItem : TreeViewItem
-    {
-        public Feature Feature { get; set; }
-    }
 
     public partial class KmlTreeView : UserControl
     {
+        ImagesFromUri _imagesFromUri = new ImagesFromUri();
         KmlFile _kmlFile = null;
         public KmlFile kmlFile
         {
@@ -139,7 +139,7 @@ namespace KmlEditorWpf
             StackPanel pan = new StackPanel();
             pan.Orientation = System.Windows.Controls.Orientation.Horizontal;
 
-            SharpKml.Dom.Style style = FindStyleByStyleURL(placemark.StyleUrl.OriginalString);
+            SharpKml.Dom.Style style = KmlFileHelper.FindStyleByStyleURL(_kmlFile, placemark.StyleUrl.OriginalString);
 
             if (placemark.Geometry is SharpKml.Dom.Point)
             {
@@ -151,7 +151,7 @@ namespace KmlEditorWpf
 
                 Image image = new Image();
                 image.Height = 16;
-                image.Source = FindImageByUri(uri);
+                image.Source = _imagesFromUri.FindImageByUri(uri);
                 pan.Children.Add(image);
             }
             else if (placemark.Geometry is LineString)
@@ -194,96 +194,6 @@ namespace KmlEditorWpf
             };
             return item;
         }
-
-        SharpKml.Dom.Style FindStyleByStyleURL(string styleUrl)
-        {
-            SharpKml.Dom.Style style = null;
-            if (!String.IsNullOrEmpty(styleUrl))
-            {
-                if (styleUrl.StartsWith("#"))
-                {
-                    styleUrl = styleUrl.Substring(1);
-                }
-
-                SharpKml.Dom.StyleSelector styleSelector = _kmlFile.Styles.FirstOrDefault(s => s.Id == styleUrl);
-                if (styleSelector != null && styleSelector is StyleMapCollection)
-                {
-                    StyleMapCollection styleMapCollection = styleSelector as StyleMapCollection;
-                    styleMapCollection.ToList().ForEach(element =>
-                    {
-                        if (element is Pair)
-                        {
-                            Pair pair = element as Pair;
-                            if (pair.State != null && pair.State == StyleState.Highlight)
-                            {
-                                string styleUrl2 = pair.StyleUrl.OriginalString;
-                                if (!String.IsNullOrEmpty(styleUrl2))
-                                {
-                                    if (styleUrl2.StartsWith("#"))
-                                    {
-                                        styleUrl2 = styleUrl2.Substring(1);
-                                    }
-                                    SharpKml.Dom.StyleSelector styleSelector2 = _kmlFile.Styles.FirstOrDefault(s => s.Id == styleUrl2);
-                                    if (styleSelector2 != null && styleSelector2 is SharpKml.Dom.Style)
-                                    {
-                                        style = styleSelector2 as SharpKml.Dom.Style;
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-            return style;
-        }
-
-        class ImageByUri
-        {
-            public BitmapImage Bi { get; set; }
-            public Uri Uri { get; set; }
-        }
-
-        List<ImageByUri> imageByUriList = new List<ImageByUri>();
-
-        BitmapImage FindImageByUri(Uri uri)
-        {
-            if (uri != null)
-            {
-                ImageByUri imageByUri = imageByUriList.FirstOrDefault(iu => iu.Uri.Equals(uri));
-                if (imageByUri == null)
-                {
-                    BitmapImage bi = new BitmapImage();
-                    // BitmapImage.UriSource must be in a BeginInit/EndInit block.
-                    bi.DownloadFailed += (sender, args) =>
-                    {
-                        if (sender is BitmapImage)
-                        {
-                            BitmapImage bit = sender as BitmapImage;
-                        }
-                    };
-
-                    if (uri != null)
-                    {
-                        // BitmapImage.UriSource must be in a BeginInit/EndInit block.
-                        bi.BeginInit();
-                        bi.UriSource = uri;
-                        bi.EndInit();
-                    }
-
-                    imageByUri = new ImageByUri()
-                    {
-                        Bi = bi,
-                        Uri = uri
-                    };
-                    imageByUriList.Add(imageByUri);
-                }
-                return imageByUri.Bi;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
+       
     }
 }

@@ -1,5 +1,6 @@
 ﻿using KmlEditorLibrary;
 using Microsoft.Win32;
+using SharpKml.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace KmlEditorWpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        KmlEditor kmlEditor = new KmlEditor();
+        KmlFile kmlFile = null;
 
         public MainWindow()
         {
@@ -46,8 +47,9 @@ namespace KmlEditorWpf
             // Process input if the user clicked OK.
             if (userClickedOK == true)
             {
-                kmlEditor.openFile(openFileDialog.FileName);
-                kmlTreeView.kmlFile = kmlEditor.kmlFile;
+                KmlFile kmlFile = KmlFileHelper.OpenFile(openFileDialog.FileName);
+                this.kmlFile = kmlFile;
+                kmlTreeView.kmlFile = kmlFile;
             }
         }
 
