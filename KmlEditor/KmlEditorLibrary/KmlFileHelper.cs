@@ -32,6 +32,23 @@ namespace KmlEditorLibrary
             }
         }
 
+        public static void SaveFile(KmlFile kmlFile, String filePath)
+        {
+            string fileExtension = System.IO.Path.GetExtension(filePath);
+            using (FileStream fileStream = File.OpenWrite(filePath))
+            {
+                if (fileExtension.Equals(".kmz", StringComparison.OrdinalIgnoreCase))
+                {
+                    KmzFile kmzFile = KmzFile.Create(kmlFile);
+                    kmzFile.Save(fileStream);
+                }
+                else
+                {
+                    kmlFile.Save(fileStream);
+                }
+            }
+        }
+
         public static void splitKmlIntoFolders(KmlFile kmlFile, String outputPath, int folderLevel)
         {
             KmlSplitter.SplitKmlIntoFolders(kmlFile, outputPath, folderLevel);
@@ -78,5 +95,21 @@ namespace KmlEditorLibrary
             }
             return style;
         }
+
+        public static Schema FindSchemaByName(KmlFile kmlFile, String name)
+        {
+            Document document = (kmlFile.Root as Kml).Feature as Document;
+            return document.Schemas.FirstOrDefault(s => s.Name == name);
+        }
+
+        public static SimpleField setSimpleField(String name, String fieldType)
+        {
+            SimpleField simpleField = new SimpleField();
+            simpleField.DisplayName = name;
+            simpleField.FieldType = fieldType;
+            return simpleField;
+        }
+
+
     }
 }

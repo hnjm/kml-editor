@@ -11,6 +11,8 @@
         <Menu x:Name="MainMenu" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <MenuItem Header="_File">
                 <MenuItem x:Name="OpenMenu" Header="_Open..." Click="OpenMenu_Click" />
+                <MenuItem x:Name="SaveMenu" Header="_Save" Click="SaveMenu_Click" />
+                <MenuItem x:Name="SaveAsMenu" Header="Save as.." Click="SaveAsMenu_Click" />
                 <Separator />
                 <MenuItem x:Name="ExitMenu" Header="_Exit" Click="ExitMenu_Click" />
             </MenuItem>

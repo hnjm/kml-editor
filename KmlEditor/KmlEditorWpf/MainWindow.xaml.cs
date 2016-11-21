@@ -1,5 +1,6 @@
 ﻿using KmlEditorLibrary;
 using Microsoft.Win32;
+using SharpKml.Dom;
 using SharpKml.Engine;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace KmlEditorWpf
     public partial class MainWindow : Window
     {
         KmlFile kmlFile = null;
+        String fileName = null;
 
         public MainWindow()
         {
@@ -48,14 +50,43 @@ namespace KmlEditorWpf
             if (userClickedOK == true)
             {
                 KmlFile kmlFile = KmlFileHelper.OpenFile(openFileDialog.FileName);
+                FerromapasKmlHelper.AddFerromapasSchemaIfNotExists(kmlFile);
+                String fileName = ((kmlFile.Root as Kml).Feature as Document).Name;
+                this.Title = fileName;
                 this.kmlFile = kmlFile;
                 kmlTreeView.kmlFile = kmlFile;
+                this.fileName = openFileDialog.FileName;
             }
         }
 
         private void ExitMenu_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void SaveMenu_Click(object sender, RoutedEventArgs e)
+        {
+            KmlFileHelper.SaveFile(kmlFile, fileName);
+        }
+
+        private void SaveAsMenu_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of the open file dialog box.
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            // Set filter options and filter index.
+            saveFileDialog.Filter = "Google Earth (.kml .kmz)|*.kml;*.kmz";
+            saveFileDialog.FilterIndex = 1;
+
+            // Call the ShowDialog method to show the dialog box.
+            bool? userClickedOK = saveFileDialog.ShowDialog();
+
+            // Process input if the user clicked OK.
+            if (userClickedOK == true)
+            {
+                KmlFileHelper.SaveFile(kmlFile, saveFileDialog.FileName);
+                fileName = saveFileDialog.FileName;
+            }
         }
     }
 }
